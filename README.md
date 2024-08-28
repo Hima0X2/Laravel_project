@@ -13,7 +13,7 @@ git clone https://github.com/Hima0X2/Laravel_project.git
 Then cd into the folder with this command-
 
 ```
-cd laravel-crud
+cd CRUD
 ```
 
 Then do a composer install
