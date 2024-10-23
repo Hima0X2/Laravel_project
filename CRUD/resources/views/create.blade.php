@@ -64,6 +64,26 @@
             </div>
         </div>
     </div>
-    
   </body>
+  <script>
+    function convertToBengaliNumerals(str) {
+        const bengaliNumbers = {
+            '0': '০', '1': '১', '2': '২', '3': '৩', '4': '৪',
+            '5': '৫', '6': '৬', '7': '৭', '8': '৮', '9': '৯'
+        };
+        return str.replace(/[0-9]/g, (digit) => bengaliNumbers[digit]);
+    }
+
+    function convertToArabicNumerals(str) {
+        const arabicNumbers = {
+            '০': '0', '১': '1', '২': '2', '৩': '3', '৪': '4',
+            '৫': '5', '৬': '6', '৭': '7', '৮': '8', '৯': '9'
+        };
+        return str.replace(/[০-৯]/g, (digit) => arabicNumbers[digit]);
+    }
+    document.getElementById('price-input').addEventListener('input', function () {
+        this.value = convertToBengaliNumerals(this.value);
+    });
+    document.getElementById('price-input').value = convertToBengaliNumerals(document.getElementById('price-input').value);
+</script>
 </html>
