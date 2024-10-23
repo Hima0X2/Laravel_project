@@ -1,12 +1,12 @@
 <!doctype html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Simple Laravel 11 CRUD</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
-  </head>
-  <body>
+</head>
+<body>
     <div class="bg-dark py-3">
         <h3 class="text-white text-center">Simple Laravel 11 CRUD</h3>
     </div>
@@ -51,7 +51,9 @@
                                 </td>
                                 <td>{{ $product->name }}</td>
                                 <td>{{ $product->sku }}</td>
-                                <td>{{ $product->price }}</td>
+                                <td>
+                                    <span class="bengali-price">{{ $product->price }}</span>
+                                </td>
                                 <td>{{ \Carbon\Carbon::parse($product->created_at)->format('d M, Y') }}</td>
                                 <td>
                                     <a href="{{ route('edit',$product->id) }}" class="btn btn-dark">Edit</a>
@@ -62,25 +64,38 @@
                                     </form>
                                 </td>
                             </tr>   
-                            @endforeach
-                            
-                            @endif
-                            
+                            @endforeach                            
+                            @endif                            
                         </table>
                     </div>
-                   
                 </div>
             </div>
         </div>
     </div>
-    
-  </body>
-</html>
 
-<script>
-    function deleteProduct(id) {
-        if (confirm("Are you sure you want to delete product?")) {
-            document.getElementById("delete-product-from-"+id).submit();
+    <script>
+        // Function to convert Arabic numerals (1234) to Bengali numerals (১২৩৪)
+        function convertToBengaliNumerals(num) {
+            const bengaliNumbers = {
+                '0': '০', '1': '১', '2': '২', '3': '৩', '4': '৪',
+                '5': '৫', '6': '৬', '7': '৭', '8': '৮', '9': '৯'
+            };
+            return num.toString().replace(/[0-9]/g, (digit) => bengaliNumbers[digit]);
         }
-    }
-</script>
+
+        // Convert all prices to Bengali numerals after the page has loaded
+        window.onload = function() {
+            document.querySelectorAll('.bengali-price').forEach(function(element) {
+                const arabicPrice = element.innerText; // Get the Arabic price
+                element.innerText = convertToBengaliNumerals(arabicPrice); // Convert and set it back
+            });
+        };
+
+        function deleteProduct(id) {
+            if (confirm("Are you sure you want to delete product?")) {
+                document.getElementById("delete-product-from-"+id).submit();
+            }
+        }
+    </script>
+</body>
+</html>
